@@ -10,6 +10,9 @@ VSCodeでの編集やビルドを想定。
 
 ### Build with VSCode
 
-Install VSCode extensions: Remote Container, Rust, and rust-analyer.
-Open the project folder with VSCode and "Reopen in container".
-`cd rust_on_m5stack` and `cargo build` (NOTE: execute inside of the docker container)
+ 1) Install VSCode extensions: Remote Container, and rust-analyer.
+ 1) Install tools: `cargo install espflash espmonitor`
+ 1) Open the project folder with VSCode and "Reopen in container".
+ 1) Run `cargo build` inside of the docker container.
+ 1) `espflash COM3 target/xtensa-esp32-espidf/debug/rust_on_m5stack` (If M5Stack is COM3, at host's terminal)
+ 1) `espmonitor COM3`
