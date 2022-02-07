@@ -1,4 +1,5 @@
 // use embedded_svc::anyerror::*;
+#![no_main]
 
 #[allow(unused_imports)]
 use esp_idf_hal::prelude::*;
@@ -15,6 +16,10 @@ use embedded_graphics::{
     text::{Alignment, Text},
 };
 use ili9341::DisplayError;
+
+use embedded_hal::digital::v2::InputPin;
+use embedded_hal::digital::v2::OutputPin;
+
 
 fn increment(current: i8) -> i8 {
     current.wrapping_add(1)
@@ -90,7 +95,8 @@ where
     draw_single_btn_status(lcd, "Btn C", btn_c, pos3);
 }
 
-fn main() -> anyhow::Result<()> {
+#[no_mangle]
+fn app_main() -> anyhow::Result<()> {
     println!("Initializing...");
 
     let peripherals: esp_idf_hal::peripherals::Peripherals =
@@ -117,6 +123,9 @@ fn main() -> anyhow::Result<()> {
 
     println!("SPI Master");
 
+    let mut spi_config = esp_idf_hal::spi::config::Config::default();
+    spi_config.baudrate = esp_idf_hal::units::Hertz(10 * 1000 * 1000);
+
     let lcd_spi_master = esp_idf_hal::spi::Master::<
         esp_idf_hal::spi::SPI2,
         esp_idf_hal::gpio::Gpio18<esp_idf_hal::gpio::Output>,
@@ -131,11 +140,7 @@ fn main() -> anyhow::Result<()> {
             sdi: None,
             cs: Some(pin_cs),
         },
-        esp_idf_hal::spi::config::Config {
-            baudrate: (esp_idf_hal::units::Hertz(10 * 1000 * 1000)),
-            data_mode: (esp_idf_hal::spi::config::MODE_0),
-            bit_order: (esp_idf_hal::spi::config::BitOrder::MSBFirst),
-        },
+        spi_config,
     )
     .unwrap();
 

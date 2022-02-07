@@ -1,6 +1,6 @@
 [package]
 name = "rust_on_m5stack"
-version = "0.1.1"
+version = "0.2.1"
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -22,10 +22,10 @@ bind = []
 
 [dependencies]
 anyhow = {version = "1", features = ["backtrace"]}
-esp-idf-sys = { version = "=0.20.1" }
-embedded-svc = "0.8.3"
-esp-idf-svc = { version = "=0.20.1", features = ["binstart"] }
-esp-idf-hal = "0.20"
+esp-idf-sys = "0.30.4"
+embedded-svc = "0.16.7"
+esp-idf-svc = "0.36.9"
+esp-idf-hal = "0.32.9"
 
 embedded-hal = "0.2.6"
 
@@ -33,12 +33,10 @@ display-interface-spi = "0.4.1"
 ili9341 = "0.5.0"
 embedded-graphics = "0.7.1"
 
-
 [build-dependencies]
-embuild = "0.24"
+embuild = "0.28.4"
 anyhow = "1"
 
 
 [patch.crates-io]
-esp-idf-hal = { git = "https://github.com/verylowfreq/esp-idf-hal", branch = "patched-v0.20.0" }
 ili9341 = { git = "https://github.com/verylowfreq/ili9341-rs", branch = "patched-v0.5.0" }
